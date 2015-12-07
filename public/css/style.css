@@ -1,0 +1,53 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 20px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 20px;
+}
+
+.overflow{
+	text-overflow: ellipsis; /* will make [...] at the end */
+    width: 100px; /* change to your preferences */
+    max-width: 100px;
+    white-space: nowrap; /* paragraph to one line */
+    overflow:hidden;
+}
+
+.footer p{
+	vertical-align: middle;
+}
+
+.forum.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.forum .fa {
+    width: 1em;
+    text-align: center;
+}
+
+.forum.table th.cell-stat {
+    width: 6em;
+}
+
+.forum.table th.cell-stat-2x {
+    width: 14em;
+}
+
+.word{
+	white-space: pre-wrap;
+}

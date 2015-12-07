@@ -1,0 +1,12 @@
+<div class="page-header">
+  <h3>New Post <small></small></h3>
+</div>
+<form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px;">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Title" maxlength="50" ng-model="title"></input>
+  </div>
+  <div class="form-group">
+    <textarea rows="10" style="height: auto;" type="text" class="form-control" placeholder="My idea is..." ng-model="postBody"></textarea>
+  </div>
+  <button id="post" type="submit" class="btn btn-primary">Post</button>
+</form>
