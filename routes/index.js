@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
-var Comment = mongoose.model('Comment');
+var Event = mongoose.model('Event');
+//var Comment = mongoose.model('Comment');
 var passport = require('passport');
 var User = mongoose.model('User');
 var jwt = require('express-jwt');
@@ -43,15 +43,16 @@ router.post('/login', function(req, res, next){
 });
 
 //route to get all posts
-router.get('/posts', function(req, res, next) {
-    Post.find(function(err, posts){
+router.get('/events', function(req, res, next) {
+    Event.find(function(err, events){
         if(err){
             return next(err);
         }
-        res.json(posts);
+        res.json(events);
     });
 });
 //route to post a post!
+/*
 router.post('/posts', auth, function(req, res, next) {
     var post = new Post(req.body);
     post.author = req.payload.username;
@@ -106,15 +107,15 @@ router.put('/posts/:post/upvote', auth, function(req, res, next) {
         }else{
             res.json(post);
         }
-        
-        
+
+
     });
 });
 /*
 COMMENTS SECTION
 */
 //post comment
-router.post('/posts/:post/comments', auth, function(req, res, next) {
+/*router.post('/posts/:post/comments', auth, function(req, res, next) {
     var comment = new Comment(req.body);
     comment.post = req.post;
     comment.author = req.payload.username;
@@ -154,11 +155,11 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, nex
         if(comment === 'ERROR'){
             res.status(400).json({message: 'You cannot vote on this...'});
         }else{
-            res.json(comment);    
+            res.json(comment);
         }
     });
 });
-
+*/
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });

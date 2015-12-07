@@ -6,8 +6,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: '/views/home.html',
         controller: 'MainCtrl',
         resolve: {
-            postPromise: ['posts', function(posts){
-                return posts.getAll();
+            postPromise: ['events', function(events){
+                return events.getAll();
             }]
         }
     })
@@ -15,6 +15,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         url: '/add',
         templateUrl: '/views/add.html',
         controller: 'MainCtrl'
+    })
+    .state('posts', {
+        url: '/posts/{id}',
+        templateUrl: '/views/posts.html',
+        controller: 'EventsCtrl',
+        resolve: {
+            post: ['$stateParams', 'events', function($stateParams, events) {
+                return events.get($stateParams.id);
+            }]
+        }
     })
     .state('login', {
         url: '/login',
@@ -37,4 +47,4 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         }]
     });
     $urlRouterProvider.otherwise('home');
-}])
+}]);

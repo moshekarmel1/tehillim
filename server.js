@@ -1,5 +1,5 @@
 var app = require('./config/app');
-var debug = require('debug')('parnassah-app:server');
+var debug = require('debug')('tehillim:server');
 var http = require('http');
 
 /**
