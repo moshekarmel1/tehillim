@@ -16,16 +16,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: '/views/add.html',
         controller: 'MainCtrl'
     })
-    .state('posts', {
-        url: '/posts/{id}',
-        templateUrl: '/views/posts.html',
-        controller: 'PostsCtrl',
-        resolve: {
-            post: ['$stateParams', 'posts', function($stateParams, posts) {
-                return posts.get($stateParams.id);
-            }]
-        }
-    })
     .state('login', {
         url: '/login',
         templateUrl: '/views/login.html',
