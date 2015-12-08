@@ -5,28 +5,30 @@ app.factory('events', ['$http', 'auth', '$window', function($http, auth, $window
     };
 
     o.getAll = function() {
-        return $http.get('/events').success(function(data){
+        return $http.get('/browse').success(function(data){
             angular.copy(data, o.events);
         });
     };
 
     o.create = function(event) {
-        return $http.post('/events', event, {
+        return $http.post('/browse', event, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
         }).success(function(data){
             o.events.push(data);
-            $window.location.href = '/#/home';
+            console.log(data);
+            $window.location.href = '/#/browse/' + data._id;
         });
     };
 
     o.update = function(id, event) {
-        return $http.put('/events/' + id, events, {
+        return $http.put('/browse/' + id, event, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
         });
     };
 
     o.get = function(id) {
-        return $http.get('/events/' + id).then(function(res){
+        return $http.get('/browse/' + id).then(function(res){
+            console.log(res.data);
             return res.data;
         });
     };

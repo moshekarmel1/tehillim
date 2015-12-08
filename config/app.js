@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 //include models
+require('../models/Assignments');
 require('../models/Events');
 require('../models/Users');
 //include passport config

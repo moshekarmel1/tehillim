@@ -16,12 +16,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         templateUrl: '/views/add.html',
         controller: 'MainCtrl'
     })
-    .state('posts', {
-        url: '/posts/{id}',
-        templateUrl: '/views/posts.html',
+    .state('browse', {
+        url: '/browse/{id}',
+        templateUrl: '/views/events.html',
         controller: 'EventsCtrl',
         resolve: {
-            post: ['$stateParams', 'events', function($stateParams, events) {
+            event: ['$stateParams', 'events', function($stateParams, events) {
                 return events.get($stateParams.id);
             }]
         }
@@ -32,7 +32,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         controller: 'AuthCtrl',
         onEnter: ['$state', 'auth', function($state, auth){
             if(auth.isLoggedIn()){
-                $state.go('home');
+                $state.go('add');
             }
         }]
     })
@@ -42,7 +42,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         controller: 'AuthCtrl',
         onEnter: ['$state', 'auth', function($state, auth){
             if(auth.isLoggedIn()){
-                $state.go('home');
+                $state.go('add');
             }
         }]
     });

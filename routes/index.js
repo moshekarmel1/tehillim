@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Event = mongoose.model('Event');
-//var Comment = mongoose.model('Comment');
+var Assignment = mongoose.model('Assignment');
 var passport = require('passport');
 var User = mongoose.model('User');
 var jwt = require('express-jwt');
@@ -17,7 +17,7 @@ router.post('/register', function(req, res, next){
     }
     var user = new User();
     user.username = req.body.username;
-    user.setPassword(req.body.password)
+    user.setPassword(req.body.password);
     user.save(function (err){
     if(err){ return next(err); }
         return res.json({
@@ -43,7 +43,7 @@ router.post('/login', function(req, res, next){
 });
 
 //route to get all posts
-router.get('/events', function(req, res, next) {
+router.get('/browse', function(req, res, next) {
     Event.find(function(err, events){
         if(err){
             return next(err);
@@ -52,50 +52,50 @@ router.get('/events', function(req, res, next) {
     });
 });
 //route to post a post!
-/*
-router.post('/posts', auth, function(req, res, next) {
-    var post = new Post(req.body);
-    post.author = req.payload.username;
-    post.save(function(err, post){
+router.post('/browse', auth, function(req, res, next) {
+    var event = new Event(req.body);
+    event.author = req.payload.username;
+    event.save(function(err, event){
         if(err){
             return next(err);
         }
-        res.json(post);
+        res.json(event);
     });
 });
 //post param
-router.param('post', function(req, res, next, id) {
-    var query = Post.findById(id);
-    query.exec(function (err, post){
+router.param('event', function(req, res, next, id) {
+    var query = Event.findById(id);
+    query.exec(function (err, event){
         if (err) {
             return next(err);
         }
-        if (!post) {
-            return next(new Error('can\'t find post'));
+        if (!event) {
+            return next(new Error('can\'t find event'));
         }
-        req.post = post;
+        req.event = event;
         return next();
     });
 });
 //get post with param id
-router.get('/posts/:post', function(req, res, next) {
-    req.post.populate('comments', function(err, post) {
+router.get('/browse/:event', function(req, res, next) {
+    req.event.populate('assignments', function(err, event) {
         if (err) {
             return next(err);
         }
-        res.json(post);
+        res.json(event);
     });
 });
 //route to update post
-router.put('/posts/:post', function(req, res, next) {
-    req.post.postBody = req.body.postBody;
-    req.post.save(function(err, post) {
+router.put('/browse/:event', function(req, res, next) {
+    req.event.save(function(err, event) {
         if (err) {
             return next(err);
         }
-        res.json(post);
+        res.json(event);
     });
 });
+
+/*
 //post upvote w/ put
 router.put('/posts/:post/upvote', auth, function(req, res, next) {
     req.post.upvote(req.payload.username, function(err, post){
@@ -115,37 +115,39 @@ router.put('/posts/:post/upvote', auth, function(req, res, next) {
 COMMENTS SECTION
 */
 //post comment
-/*router.post('/posts/:post/comments', auth, function(req, res, next) {
-    var comment = new Comment(req.body);
-    comment.post = req.post;
-    comment.author = req.payload.username;
-    comment.save(function(err, comment){
+router.post('/browse/:event/assignments', auth, function(req, res, next) {
+    var assignment = new Assignment(req.body);
+    assignment.event = req.event;
+    assignment.assignedTo = req.payload.username;
+    assignment.save(function(err, assignment){
         if(err){
             return next(err);
         }
-        req.post.comments.push(comment);
-        req.post.save(function(err, post) {
+        req.event.assignments.push(assignment);
+        req.event.save(function(err, event) {
             if(err){
                 return next(err);
             }
-            res.json(comment);
+            res.json(assignment);
         });
     });
 });
 //comment param
-router.param('comment', function(req, res, next, id) {
-    var query = Comment.findById(id);
-    query.exec(function (err, comment){
+router.param('assignment', function(req, res, next, id) {
+    var query = Assignment.findById(id);
+    query.exec(function (err, assignment){
         if (err) {
             return next(err);
         }
-        if (!comment) {
-            return next(new Error('can\'t find comment'));
+        if (!assignment) {
+            return next(new Error('can\'t find assignment'));
         }
-        req.comment = comment;
+        req.assignment = assignment;
         return next();
     });
 });
+
+/*
 //post comment upvote
 router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, next) {
     req.comment.upvote(req.payload.username, function(err, comment){

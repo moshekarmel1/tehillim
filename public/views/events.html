@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="page-header" style="margin-top: 75px;">
+    <h3>{{event.title}} <br/><small>by {{event.createdBy}}
+        <span title="{{event.created | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a'}}" am-time-ago="event.created"></span>
+      </small>
+    </h3>
+  </div>
+  <div class="row">
+    <div class="col-md-2" ng-repeat="kap in kapitels">
+      <div class="flip"> 
+          <div class="card" ng-class="{'flipped': kap.isFlipped}"> 
+              <div class="face front"> 
+                  <label>{{kap.name}}</label>
+                  <i class="icon-lg ion-checkmark-circled" ng-click="kap.isFlipped=!kap.isFlipped"></i>
+              </div> 
+              <div class="face back"> 
+                  <label>Taken by 
+                  {{kap.takenBy}}</label><br />
+                  <i class="icon-md ion-close-circled"></i>
+              </div> 
+          </div> 
+      </div>
+      <br />
+    </div>
+  </div>
+</div>

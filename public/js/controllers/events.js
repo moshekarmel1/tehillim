@@ -1,8 +1,7 @@
 var app = angular.module('tehillim');
 app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($scope, events, event, auth){
     $scope.isLoggedIn = auth.isLoggedIn;
-    /*$scope.event = event;
-    $scope.edit = false;
+    $scope.event = event;
     $scope.currentUser = auth.currentUser;
 
     $scope.order = '-upvotes';
@@ -15,6 +14,59 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         $scope.edit = !$scope.edit;
     };
 
+    $scope.kapitels = [
+        {
+            name : 1,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 2,
+            isFlipped: true,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 3,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 4,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 5,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 6,
+            isFlipped: true,
+            takenBy: "mkarmel"
+        },
+        {
+            name : 7,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 8,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 9,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        },
+        {
+            name : 10,
+            isFlipped: false,
+            takenBy: "pizzaman"
+        }
+    ];
+    /*
     $scope.save = function(){
         events.update(event._id, {
             postBody: $scope.updatedVersion

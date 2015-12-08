@@ -13,22 +13,24 @@ app.controller('MainCtrl', ['$scope', 'events', 'auth', '$window', function($sco
     $scope.add = function(){
         $window.location.href = '/#/add';
     };
-    /*
+    
     $scope.addPost = function(){
         if(!$scope.title || $scope.title === '') {
             return;
         }
-        if(!$scope.postBody || $scope.postBody === '') {
+        if(!$scope.name || $scope.name === '') {
             return;
         }
-        posts.create({
-            title: $scope.title,
-            postBody: $scope.postBody,
+        events.create({
+            title: $scope.title.trim(),
+            name: $scope.name.trim(),
+            description: $scope.description,
         });
         $scope.title = '';
-        $scope.postBody = '';
+        $scope.name = '';
+        $scope.description = '';
     };
-
+    /*
     $scope.incrementUpvotes = function(post) {
         if(!auth.isLoggedIn()) return;
         if(auth.currentUser() === post.author) return;
