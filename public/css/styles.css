@@ -378,6 +378,10 @@ img::-moz-selection{
     border: 1px solid #000;
 }
 
+.progress-bar{
+	background-color: #9c27b0;
+}
+
 /*.flip {
   -webkit-perspective: 800;
    width: 200px;

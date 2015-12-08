@@ -6,6 +6,7 @@ var EventSchema = new mongoose.Schema({
     description: String,
     created: {type: Date, default: Date.now},
     createdBy: String,
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }]
 });
 

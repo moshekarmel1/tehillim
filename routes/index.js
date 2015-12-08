@@ -54,7 +54,8 @@ router.get('/browse', function(req, res, next) {
 //route to post a post!
 router.post('/browse', auth, function(req, res, next) {
     var event = new Event(req.body);
-    event.author = req.payload.username;
+    event.author = req.payload._id;
+    event.createdBy = req.payload.username;
     event.save(function(err, event){
         if(err){
             return next(err);
@@ -112,13 +113,14 @@ router.put('/posts/:post/upvote', auth, function(req, res, next) {
     });
 });
 /*
-COMMENTS SECTION
+Assignments SECTION
 */
-//post comment
+//post assignments
 router.post('/browse/:event/assignments', auth, function(req, res, next) {
     var assignment = new Assignment(req.body);
     assignment.event = req.event;
     assignment.assignedTo = req.payload.username;
+    assignment.assignee = req.payload._id;
     assignment.save(function(err, assignment){
         if(err){
             return next(err);

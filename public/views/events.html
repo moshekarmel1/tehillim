@@ -5,13 +5,21 @@
       </small>
     </h3>
   </div>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"  style="min-width: 2em; width: {{progress}}%;">
+      {{progress}}%
+    </div>
+  </div>
+  <div ng-hide="isLoggedIn()">
+    <h5>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can select a kapitel. It only takes a second. Seriously.</h5>
+  </div>
   <div class="row">
     <div class="col-md-2" ng-repeat="kap in kapitels">
       <div class="flip"> 
           <div class="card" ng-class="{'flipped': kap.isFlipped}"> 
               <div class="face front"> 
                   <label>{{kap.name}}</label>
-                  <i class="icon-lg ion-checkmark-circled" ng-click="kap.isFlipped=!kap.isFlipped"></i>
+                  <i class="icon-lg ion-checkmark-circled" ng-click="addAssignment(kap)"></i>
               </div> 
               <div class="face back"> 
                   <label>Taken by 

@@ -15,7 +15,6 @@ app.factory('events', ['$http', 'auth', '$window', function($http, auth, $window
             headers: {Authorization: 'Bearer ' + auth.getToken()}
         }).success(function(data){
             o.events.push(data);
-            console.log(data);
             $window.location.href = '/#/browse/' + data._id;
         });
     };
@@ -33,6 +32,11 @@ app.factory('events', ['$http', 'auth', '$window', function($http, auth, $window
         });
     };
 
+    o.addAssignment = function(id, assignment){
+        return $http.post('/browse/' + id + '/assignments', assignment, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        });
+    };
 
     return o;
 }]);

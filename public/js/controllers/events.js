@@ -14,58 +14,35 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         $scope.edit = !$scope.edit;
     };
 
-    $scope.kapitels = [
-        {
-            name : 1,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 2,
-            isFlipped: true,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 3,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 4,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 5,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 6,
-            isFlipped: true,
-            takenBy: "mkarmel"
-        },
-        {
-            name : 7,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 8,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 9,
-            isFlipped: false,
-            takenBy: "pizzaman"
-        },
-        {
-            name : 10,
-            isFlipped: false,
-            takenBy: "pizzaman"
+    $scope.kapitels = function(){
+        var arr = [];
+        for (var i = 1; i < 151; i++) {
+            arr.push({
+                name: i,
+                isFlipped: false
+            });
         }
-    ];
+        for (var j = 0; j < $scope.event.assignments.length; j++) {
+            var current = $scope.event.assignments[j].kapitel;
+            if(arr[current]){
+                arr[current].isFlipped = true;
+                arr[current].takenBy = $scope.event.assignments[j].assignedTo;
+            }
+        }
+        return arr;
+    }();
+
+    $scope.progress = 25;
+
+    $scope.getProgress = function(){
+        arr2 = $scope.kapitels.filter(function(obj){
+            return obj.isFlipped === true;
+        });
+
+        $scope.progress = 150 / arr2.length;//fix percent math
+    };
+
+
     /*
     $scope.save = function(){
         events.update(event._id, {
@@ -76,19 +53,23 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
             $scope.edit = false;
         });
     };
+    */
 
-    $scope.addComment = function(){
-        if($scope.body === '' || !auth.isLoggedIn()) {
+    $scope.addAssignment = function(kapitel){
+        if(!auth.isLoggedIn()) {
             return;
         }
-        posts.addComment(post._id, {
-            body: $scope.body
-        }).success(function(comment) {
-            $scope.post.comments.push(comment);
+        events.addAssignment(event._id, {
+            kapitel: kapitel.name,
+            event: event._id
+        }).success(function(assignment) {
+            $scope.event.assignments.push(assignment);
+            kapitel.isFlipped = true;
+            kapitel.takenBy = assignment.assignedTo;
+            $scope.getProgress();
         });
-        $scope.body = '';
     };
-
+    /*
     $scope.upvote = function(post){
         if(!auth.isLoggedIn()) return;
         if(auth.currentUser() === post.author) return;
