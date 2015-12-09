@@ -1,13 +1,13 @@
 <div class="container">
   <div class="page-header" style="margin-top: 75px;">
-    <h3>{{event.title}} <br/><small>by {{event.createdBy}}
+    <h3>{{event.title}} <br/><small>posted by {{event.createdBy}}
         <span title="{{event.created | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a'}}" am-time-ago="event.created"></span>
       </small>
     </h3>
   </div>
   <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"  style="min-width: 2em; width: {{progress}}%;">
-      {{progress}}%
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{event.percent}}" aria-valuemin="0" aria-valuemax="100"  style="min-width: 2em; width: {{event.percent}}%;">
+      {{event.percent}}%
     </div>
   </div>
   <div ng-hide="isLoggedIn()">
@@ -16,17 +16,17 @@
   <div class="row">
     <div class="col-md-2" ng-repeat="kap in kapitels">
       <div class="flip"> 
-          <div class="card" ng-class="{'flipped': kap.isFlipped}"> 
-              <div class="face front"> 
-                  <label>{{kap.name}}</label>
-                  <i class="icon-lg ion-checkmark-circled" ng-click="addAssignment(kap)"></i>
-              </div> 
-              <div class="face back"> 
-                  <label>Taken by 
-                  {{kap.takenBy}}</label><br />
-                  <i class="icon-md ion-close-circled"></i>
-              </div> 
+        <div class="card" ng-class="{'flipped': kap.isFlipped}"> 
+          <div class="face front"> 
+            <label>{{kap.name}}</label>
+            <i class="icon-lg ion-checkmark-circled" ng-click="addAssignment(kap)"></i>
           </div> 
+          <div class="face back"> 
+            <label>Taken by <br />
+            {{kap.takenBy}}</label><br />
+            <i class="icon-md ion-close-circled"></i>
+          </div> 
+        </div> 
       </div>
       <br />
     </div>

@@ -342,7 +342,7 @@ img::-moz-selection{
 	height: 100%;
     -webkit-perspective: 800;
 	perspective: 800;
-    position: relative;
+    /*position: relative;*/
  	text-align: center;
 }
 .flip .card.flipped {

@@ -126,11 +126,15 @@ router.post('/browse/:event/assignments', auth, function(req, res, next) {
             return next(err);
         }
         req.event.assignments.push(assignment);
+        req.event.percent = Math.round(req.event.assignments.length * 100 / 150);
         req.event.save(function(err, event) {
             if(err){
                 return next(err);
             }
-            res.json(assignment);
+            res.json({
+                assignment: assignment,
+                event: event
+            });
         });
     });
 });

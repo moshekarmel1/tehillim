@@ -42,7 +42,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-sm-6" ng-repeat="event in events">
-                {{event.title}}  
+                <a href="/#/browse/{{event._id}}">{{event.title}}</a>  
             </div>
         </div>
     </div>

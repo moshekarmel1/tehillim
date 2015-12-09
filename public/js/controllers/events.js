@@ -14,7 +14,9 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         $scope.edit = !$scope.edit;
     };
 
-    $scope.kapitels = function(){
+    $scope.kapitels = [];
+
+    $scope.getKapitels = function(){
         var arr = [];
         for (var i = 1; i < 151; i++) {
             arr.push({
@@ -23,25 +25,15 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
             });
         }
         for (var j = 0; j < $scope.event.assignments.length; j++) {
-            var current = $scope.event.assignments[j].kapitel;
+            var current = $scope.event.assignments[j].kapitel - 1;
             if(arr[current]){
                 arr[current].isFlipped = true;
                 arr[current].takenBy = $scope.event.assignments[j].assignedTo;
             }
         }
+        $scope.kapitels = arr;
         return arr;
     }();
-
-    $scope.progress = 25;
-
-    $scope.getProgress = function(){
-        arr2 = $scope.kapitels.filter(function(obj){
-            return obj.isFlipped === true;
-        });
-
-        $scope.progress = 150 / arr2.length;//fix percent math
-    };
-
 
     /*
     $scope.save = function(){
@@ -56,17 +48,18 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     */
 
     $scope.addAssignment = function(kapitel){
+        console.log(kapitel);
         if(!auth.isLoggedIn()) {
             return;
         }
         events.addAssignment(event._id, {
             kapitel: kapitel.name,
             event: event._id
-        }).success(function(assignment) {
-            $scope.event.assignments.push(assignment);
+        }).success(function(data) {
+            $scope.event.assignments.push(data.assignment);
+            $scope.event = data.event;
             kapitel.isFlipped = true;
-            kapitel.takenBy = assignment.assignedTo;
-            $scope.getProgress();
+            kapitel.takenBy = data.assignment.assignedTo;
         });
     };
     /*

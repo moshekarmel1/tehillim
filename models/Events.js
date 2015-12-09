@@ -4,6 +4,7 @@ var EventSchema = new mongoose.Schema({
     title: String,
     name: String,
     description: String,
+    percent: Number,
     created: {type: Date, default: Date.now},
     createdBy: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
