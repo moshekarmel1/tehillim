@@ -6,7 +6,8 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
         auth.register($scope.user).error(function(error){
             $scope.error = error;
         }).then(function(){
-            $state.go('home');
+            window.history.back();
+            //$state.go('home');
         });
     };
 
@@ -14,7 +15,8 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
         auth.logIn($scope.user).error(function(error){
             $scope.error = error;
         }).then(function(){
-            $state.go('home');
+            window.history.back();
+            //$state.go('home');
         });
     };
 }]);

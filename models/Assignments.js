@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var AssignmentSchema = new mongoose.Schema({
-    kapitel: { type: Number, unique: true },
+    kapitel: Number,
     assignedTo: String,
     assigned: {type: Date, default: Date.now},
     event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },

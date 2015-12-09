@@ -1,10 +1,16 @@
 <div class="container">
   <div class="page-header" style="margin-top: 75px;">
-    <h3>{{event.title}} <br/><small>posted by {{event.createdBy}}
+    <a ng-click="sendEmail()" class="btn btn-primary btn-md pull-right"><i class="icon-md ion-share"></i><span class="hidden-sm hidden-xs"> Share Link</span></a>
+    <h3>{{event.title}} <br/>
+      <small>
+        daven for {{event.name}}
+      </small><br />
+      <small>posted by {{event.createdBy}}
         <span title="{{event.created | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a'}}" am-time-ago="event.created"></span>
       </small>
     </h3>
   </div>
+  <p class="lead" ng-show="event.description">{{event.description}}</p>
   <div class="progress">
     <div class="progress-bar" role="progressbar" aria-valuenow="{{event.percent}}" aria-valuemin="0" aria-valuemax="100"  style="min-width: 2em; width: {{event.percent}}%;">
       {{event.percent}}%
@@ -14,7 +20,7 @@
     <h5>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can select a kapitel. It only takes a second. Seriously.</h5>
   </div>
   <div class="row">
-    <div class="col-md-2" ng-repeat="kap in kapitels">
+    <div class="col-md-2" ng-repeat="kap in kapitels | orderBy:'name'">
       <div class="flip"> 
         <div class="card" ng-class="{'flipped': kap.isFlipped}"> 
           <div class="face front"> 

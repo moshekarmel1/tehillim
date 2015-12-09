@@ -62,6 +62,14 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
             kapitel.takenBy = data.assignment.assignedTo;
         });
     };
+
+    $scope.sendEmail = function() {
+        var link = "mailto:"
+                 + "?subject=" + escape("Can you help say some tehillim?")
+                 + "&body=" + escape(window.location); 
+
+        window.location.href = link;
+     };
     /*
     $scope.upvote = function(post){
         if(!auth.isLoggedIn()) return;
