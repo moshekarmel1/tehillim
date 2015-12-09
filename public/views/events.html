@@ -17,11 +17,21 @@
     </div>
   </div>
   <div ng-hide="isLoggedIn()">
-    <h5>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can select a kapitel. It only takes a second. Seriously.</h5>
+    <h4>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can select a kapitel. It only takes a second. Seriously.</h4>
   </div>
   <div class="row">
-    <div class="col-md-2" ng-repeat="kap in kapitels | orderBy:'name'">
-      <div class="flip"> 
+    <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
+      <label>Select sorting options</label>
+      <select class="form-control" ng-options="option for option in listOfOptions" 
+              ng-model="selectedItem"
+              ng-change="selectedItemChanged()">
+      </select>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-2" ng-repeat="kap in kapitels | orderBy: order">
+      <div class="flip" ng-class="{'hidden': hidden && kap.isFlipped}"> 
         <div class="card" ng-class="{'flipped': kap.isFlipped}"> 
           <div class="face front"> 
             <label>{{kap.name}}</label>

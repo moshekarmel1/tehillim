@@ -4,7 +4,30 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     $scope.event = event;
     $scope.currentUser = auth.currentUser;
 
-    $scope.order = '-upvotes';
+    $scope.listOfOptions = ['Only show available', 'Show all', 'Lowest to Highest', 'Highest to Lowest'];
+
+    $scope.order = 'name';
+
+    $scope.hidden = false;
+
+    $scope.selectedItemChanged = function(){
+        switch($scope.selectedItem){
+            case 'Only show available':
+                $scope.hidden = true;
+                break;
+            case 'Show all':
+                $scope.hidden = false;
+                break;
+            case 'Lowest to Highest':
+                $scope.order = 'name';
+                break;
+            case 'Highest to Lowest':
+                $scope.order = '-name';
+                break;
+            default:
+                break;
+        }
+    };
 
     $scope.setOrder = function (order) {
         $scope.order = order;
