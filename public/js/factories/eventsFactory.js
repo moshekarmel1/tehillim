@@ -27,7 +27,6 @@ app.factory('events', ['$http', 'auth', '$window', function($http, auth, $window
 
     o.get = function(id) {
         return $http.get('/browse/' + id).then(function(res){
-            console.log(res.data);
             return res.data;
         });
     };

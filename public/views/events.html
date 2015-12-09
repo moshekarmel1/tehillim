@@ -20,7 +20,7 @@
     <h4>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can select a kapitel. It only takes a second. Seriously.</h4>
   </div>
   <div class="row">
-    <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
+    <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
       <label>Select sorting options</label>
       <select class="form-control" ng-options="option for option in listOfOptions" 
               ng-model="selectedItem"
@@ -44,7 +44,7 @@
           </div> 
         </div> 
       </div>
-      <br />
+      <br ng-class="{'hidden': hidden && kap.isFlipped}" />
     </div>
   </div>
 </div>
