@@ -21,7 +21,9 @@
   <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
       <label>Select sorting options</label>
-      <select class="form-control" ng-options="option for option in listOfOptions" 
+      <select class="form-control" 
+              ng-options="option for option in listOfOptions"
+              ng-init="selectedItem = listOfOptions[0]" 
               ng-model="selectedItem"
               ng-change="selectedItemChanged()">
       </select>

@@ -10,6 +10,17 @@ var jwt = require('express-jwt');
 var auth = jwt({
     secret: process.env.SECRET, userProperty: 'payload'
 });
+//http://stackoverflow.com/questions/3954438/remove-item-from-array-by-value
+var remove = function(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+};
 //route to register new user
 router.post('/register', function(req, res, next){
     if(!req.body.username || !req.body.password){
@@ -95,26 +106,23 @@ router.put('/browse/:event', function(req, res, next) {
         res.json(event);
     });
 });
-
-/*
-//post upvote w/ put
-router.put('/posts/:post/upvote', auth, function(req, res, next) {
-    req.post.upvote(req.payload.username, function(err, post){
-        if (err) {
-            return next(err);
-        }
-        if(post === 'ERROR'){
-            res.status(400).json({message: 'You cannot vote on this...'});
-        }else{
-            res.json(post);
-        }
-
-
-    });
-});
 /*
 Assignments SECTION
 */
+//assignment param
+router.param('assignment', function(req, res, next, id) {
+    var query = Assignment.findById(id);
+    query.exec(function (err, assignment){
+        if (err) {
+            return next(err);
+        }
+        if (!assignment) {
+            return next(new Error('can\'t find assignment'));
+        }
+        req.assignment = assignment;
+        return next();
+    });
+});
 //post assignments
 router.post('/browse/:event/assignments', auth, function(req, res, next) {
     var assignment = new Assignment(req.body);
@@ -138,36 +146,22 @@ router.post('/browse/:event/assignments', auth, function(req, res, next) {
         });
     });
 });
-//comment param
-router.param('assignment', function(req, res, next, id) {
-    var query = Assignment.findById(id);
-    query.exec(function (err, assignment){
-        if (err) {
-            return next(err);
-        }
-        if (!assignment) {
-            return next(new Error('can\'t find assignment'));
-        }
-        req.assignment = assignment;
-        return next();
+//delete assignment
+router.delete('/browse/:event/assignments/:assignment', auth, function(req, res, next) {
+    var id = req.assignment._id;
+    Assignment.findByIdAndRemove(id, function(data){
+        console.log(req.event.assignments);
+        remove(req.event.assignments, id);
+        req.event.percent = Math.round(req.event.assignments.length * 100 / 150);
+        req.event.save(function(err, event) {
+            if(err){
+                return next(err);
+            }
+            res.json(event);
+        });
     });
 });
 
-/*
-//post comment upvote
-router.put('/posts/:post/comments/:comment/upvote', auth, function(req, res, next) {
-    req.comment.upvote(req.payload.username, function(err, comment){
-        if (err) {
-            return next(err);
-        }
-        if(comment === 'ERROR'){
-            res.status(400).json({message: 'You cannot vote on this...'});
-        }else{
-            res.json(comment);
-        }
-    });
-});
-*/
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });

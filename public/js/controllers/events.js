@@ -4,7 +4,7 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     $scope.event = event;
     $scope.currentUser = auth.currentUser;
 
-    $scope.listOfOptions = ['Only show available', 'Show all', 'Lowest to Highest', 'Highest to Lowest'];
+    $scope.listOfOptions = ['Show all', 'Only show available', 'Lowest to Highest', 'Highest to Lowest'];
 
     $scope.order = 'name';
 
@@ -84,6 +84,24 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
             kapitel.isFlipped = true;
             kapitel.takenBy = data.assignment.assignedTo;
         });
+    };
+
+    $scope.deleteAssignment = function(kapitel){
+        var assign;
+        for (var i = 0; i < $scope.event.assignments.length; i++) {
+            if($scope.event.assignments[i].kapitel === kapitel.name){
+                assign = $scope.event.assignments[i];
+                break;
+            }
+        }
+        if(!assign) return;
+        if(assign.assignedTo !== $scope.currentUser()){
+            return;
+        }else{
+            events.deleteAssignment(event._id, assign).success(function(data) {
+                $scope.event = data;
+            });
+        }
     };
 
     $scope.sendEmail = function() {

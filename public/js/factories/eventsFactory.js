@@ -37,5 +37,13 @@ app.factory('events', ['$http', 'auth', '$window', function($http, auth, $window
         });
     };
 
+    o.deleteAssignment = function(id, assignment){
+        return $http.delete('/browse/' + id + '/assignments/' + assignment._id, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        });
+    };
+
     return o;
 }]);
