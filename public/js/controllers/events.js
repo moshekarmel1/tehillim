@@ -41,7 +41,7 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
 
     $scope.getKapitels = function(){
         var arr = [];
-        for (var i = 1; i < 151; i++) {
+        for (var i = 1; i < $scope.event.max + 1; i++) {
             arr.push({
                 name: i,
                 isFlipped: false
@@ -104,9 +104,10 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         }
     };
 
-    $scope.sendEmail = function() {
+    $scope.sendEmail = function(event) {
+        var subject = (event.max === 150) ? escape("Can you help say some tehillim?") : escape("Are you making challah this week?");
         var link = "mailto:"
-                 + "?subject=" + escape("Can you help say some tehillim?")
+                 + "?subject=" + subject
                  + "&body=" + escape(window.location); 
 
         window.location.href = link;

@@ -5,6 +5,7 @@ var EventSchema = new mongoose.Schema({
     name: String,
     description: String,
     percent: Number,
+    max: Number,
     created: {type: Date, default: Date.now},
     createdBy: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

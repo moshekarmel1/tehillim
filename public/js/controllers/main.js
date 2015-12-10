@@ -4,6 +4,8 @@ app.controller('MainCtrl', ['$scope', 'events', 'auth', '$window', function($sco
     $scope.currentUser = auth.currentUser;
     $scope.events = events.events;
 
+    $scope.listOfOptions = ['Finish Sefer Tehillim', 'Take Challah with a bracha'];
+
     $scope.order = '-upvotes';
 
     $scope.setOrder = function (order) {
@@ -21,10 +23,23 @@ app.controller('MainCtrl', ['$scope', 'events', 'auth', '$window', function($sco
         if(!$scope.name || $scope.name === '') {
             return;
         }
+        var max;
+        switch($scope.selectedItem) {
+            case 'Finish Sefer Tehillim':
+                max = 150;
+                break;
+            case 'Take Challah with a bracha':
+                max = 40;
+                break;
+            default:
+                max = 150;
+                break;
+        }
         events.create({
             title: $scope.title.trim(),
             name: $scope.name.trim(),
-            description: $scope.description,
+            max: max,
+            description: $scope.description
         });
         $scope.title = '';
         $scope.name = '';

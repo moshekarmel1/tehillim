@@ -2,7 +2,7 @@
   <div class="page-header" style="margin-top: 75px;">
     <a ng-click="sendEmail()" class="btn btn-primary btn-md pull-right"><i class="icon-md ion-share"></i><span class="hidden-sm hidden-xs"> Share Link</span></a>
     <h3>{{event.title}} <br/>
-      <small>please daven for</small><br />
+      <small ng-show="event.max === 150">please daven for</small><small ng-show="event.max === 40">please take challah for</small><br />
       {{event.name}}<br />
       <small>posted by {{event.createdBy}}
         <span title="{{event.created | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a'}}" am-time-ago="event.created"></span>
@@ -16,11 +16,18 @@
     </div>
   </div>
   <div ng-hide="isLoggedIn()">
-    <h4>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can select a kapitel. It only takes a second. Seriously.</h4>
+    <h4>Please <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can make a selection. It only takes a second. Seriously.</h4>
   </div>
+  
   <div class="row">
+    <div class="col-md-8 col-sm-6 col-xs-12 pull-left" ng-show="event.max === 150">
+      <h4>Select a kapitel(chapter) of Tehillim based on the number. 1 = Aleph.</h4>
+    </div>
+    <div class="col-md-8 col-sm-6 col-xs-12 pull-left" ng-show="event.max === 40">
+      <h4>Select a number to join the group of 40.</h4>
+    </div>
     <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
-      <label>Select sorting options</label>
+      <label>Filtering options</label>
       <select class="form-control" 
               ng-options="option for option in listOfOptions"
               ng-init="selectedItem = listOfOptions[0]" 
