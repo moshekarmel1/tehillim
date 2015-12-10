@@ -1,6 +1,6 @@
 <div class="container">
   <div class="page-header" style="margin-top: 75px;">
-    <a ng-click="sendEmail()" class="btn btn-primary btn-md pull-right"><i class="icon-md ion-share"></i><span class="hidden-sm hidden-xs"> Share Link</span></a>
+    <a ng-click="sendEmail(event)" class="btn btn-primary btn-md pull-right"><i class="icon-md ion-share"></i><span class="hidden-sm hidden-xs"> Share Link</span></a>
     <h3>{{event.title}} <br/>
       <small ng-show="event.max === 150">please daven for</small><small ng-show="event.max === 40">please take challah for</small><br />
       {{event.name}}<br />
