@@ -19,6 +19,10 @@
     <h4>Please <a href="/#/register">Register</a> or  <a href="/#/login">Log In</a> before you can make a selection. It only takes a second. Seriously.</h4>
 
   </div>
+
+  <div ng-show="error" class="alert alert-warning row">
+    <span>{{error.message}}</span>
+  </div>
   
   <div class="row">
     <div class="col-md-8 col-sm-6 col-xs-12 pull-left" ng-show="event.max === 150">

@@ -18,9 +18,15 @@ app.controller('MainCtrl', ['$scope', 'events', 'auth', '$window', function($sco
     
     $scope.addPost = function(){
         if(!$scope.title || $scope.title === '') {
+            $scope.error = {
+                message: 'Please fill out a title...'
+            };
             return;
         }
         if(!$scope.name || $scope.name === '') {
+            $scope.error = {
+                message: 'Please enter a hebrew name...'
+            };
             return;
         }
         var max;

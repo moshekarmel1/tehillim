@@ -71,8 +71,10 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     */
 
     $scope.addAssignment = function(kapitel){
-        console.log(kapitel);
         if(!auth.isLoggedIn()) {
+            $scope.error = {
+                message: 'You have to register or log in before you can join...'
+            };
             return;
         }
         events.addAssignment(event._id, {
