@@ -73,6 +73,7 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     $scope.addAssignment = function(kapitel){
         if(!auth.isLoggedIn()) {
             $scope.error = {
+                class: 'warning',
                 message: 'You have to register or log in before you can make a selection...'
             };
             return;
