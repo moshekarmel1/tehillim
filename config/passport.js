@@ -8,7 +8,7 @@ passport.use(new LocalStrategy(
         User.findOne({ username: username }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
+                return done(null, false, { message: 'Incorrect username. If this is your first time here, you need to register.' });
             }
             if (!user.validPassword(password)) {
                 return done(null, false, { message: 'Incorrect password.' });
