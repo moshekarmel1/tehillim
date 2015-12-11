@@ -5,6 +5,9 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>http://daveningdoes.work/</loc>
+  <loc>http://tefillos.work/</loc>
+</url>
+<url>
+  <loc>http://tefillos.work/#/home</loc>
 </url>
 </urlset>
