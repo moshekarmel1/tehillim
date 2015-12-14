@@ -30,7 +30,13 @@ router.post('/register', function(req, res, next){
     user.username = req.body.username;
     user.setPassword(req.body.password);
     user.save(function (err){
-    if(err){ return next(err); }
+        console.log(err);
+        if(err){
+            if(err.code === 11000){
+                return res.status(400).json({message: 'Sorry that username is already taken'});
+            }
+            return next(err); 
+        }
         return res.json({
             token: user.generateJWT()
         });
@@ -42,7 +48,9 @@ router.post('/login', function(req, res, next){
         return res.status(400).json({message: 'Please fill out all fields'});
     }
     passport.authenticate('local', function(err, user, info){
-        if(err){ return next(err); }
+        if(err){ 
+            return next(err); 
+        }
         if(user){
             return res.json({
                 token: user.generateJWT()

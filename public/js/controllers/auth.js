@@ -4,8 +4,9 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
 
     $scope.register = function(){
         auth.register($scope.user).error(function(error){
+            console.log(error);
             $scope.error = error;
-            error.class = 'error';
+            $scope.error.class = 'danger';
         }).then(function(){
             $scope.error = {
                 class: 'success',
@@ -17,9 +18,11 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
     };
 
     $scope.logIn = function(){
+        //the db stores everything lowercase anyway
+        $scope.user.username = $scope.user.username.toLowerCase();
         auth.logIn($scope.user).error(function(error){
             $scope.error = error;
-            error.class = 'error';
+            $scope.error.class = 'danger';
         }).then(function(){
             $scope.error = {
                 class: 'success',
