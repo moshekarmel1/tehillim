@@ -142,7 +142,7 @@ router.post('/browse/:event/assignments', auth, function(req, res, next) {
             return next(err);
         }
         req.event.assignments.push(assignment);
-        req.event.percent = Math.round(req.event.assignments.length * 100 / req.event.max);
+        req.event.percent = Math.round((req.event.assignments.length * 100) / req.event.max);
         req.event.save(function(err, event) {
             if(err){
                 return next(err);
@@ -164,7 +164,7 @@ router.delete('/browse/:event/assignments/:assignment', auth, function(req, res,
     var id = req.assignment._id;
     Assignment.findByIdAndRemove(id, function(data){
         req.event.assignments.remove(id);
-        req.event.percent = Math.round(req.event.assignments.length * 100 / req.event.max);
+        req.event.percent = Math.round((req.event.assignments.length * 100) / req.event.max);
         req.event.save(function(err, event) {
             if(err){
                 return next(err);
