@@ -75,7 +75,6 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     };
 
     $scope.deleteAssignment = function(kapitel){
-        console.log("ng-clicked!!");
         var assign;
         for (var i = 0; i < $scope.event.assignments.length; i++) {
             if($scope.event.assignments[i].kapitel === kapitel.name){
@@ -83,7 +82,6 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
                 break;
             }
         }
-        console.log(assign);
         if(!assign) return;
         if(assign.assignedTo !== $scope.currentUser()){
             $scope.error = {

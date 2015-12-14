@@ -173,7 +173,7 @@ router.delete('/browse/:event/assignments/:assignment', auth, function(req, res,
                 if (err) {
                     return next(err);
                 }
-                res.json(event);
+                res.json(req.event);
             });
         });
     });
