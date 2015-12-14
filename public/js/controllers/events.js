@@ -3,6 +3,7 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.event = event;
     $scope.currentUser = auth.currentUser;
+    $scope.actualCurrentUser = auth.currentUser();
 
     $scope.listOfOptions = ['Show all', 'Only show available', 'Lowest to Highest', 'Highest to Lowest'];
 
@@ -33,10 +34,6 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         $scope.order = order;
     };
 
-    $scope.toggleEdit = function(){
-        $scope.edit = !$scope.edit;
-    };
-
     $scope.kapitels = [];
 
     $scope.getKapitels = function(){
@@ -58,18 +55,6 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         return arr;
     }();
 
-    /*
-    $scope.save = function(){
-        events.update(event._id, {
-            postBody: $scope.updatedVersion
-        }).success(function(data){
-            $scope.post.postBody = data.postBody;
-            $scope.updatedVersion = data.postBody;
-            $scope.edit = false;
-        });
-    };
-    */
-
     $scope.addAssignment = function(kapitel){
         if(!auth.isLoggedIn()) {
             $scope.error = {
@@ -90,6 +75,7 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
     };
 
     $scope.deleteAssignment = function(kapitel){
+        console.log("ng-clicked!!");
         var assign;
         for (var i = 0; i < $scope.event.assignments.length; i++) {
             if($scope.event.assignments[i].kapitel === kapitel.name){
@@ -97,12 +83,19 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
                 break;
             }
         }
+        console.log(assign);
         if(!assign) return;
         if(assign.assignedTo !== $scope.currentUser()){
+            $scope.error = {
+                class: 'warning',
+                message: 'You can\'t delete assignments that aren\'t yours...'
+            };
             return;
         }else{
             events.deleteAssignment(event._id, assign).success(function(data) {
                 $scope.event = data;
+                kapitel.isFlipped = false;
+                kapitel.takenBy = null;
             });
         }
     };
@@ -115,19 +108,4 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
 
         window.location.href = link;
      };
-    /*
-    $scope.upvote = function(post){
-        if(!auth.isLoggedIn()) return;
-        if(auth.currentUser() === post.author) return;
-        posts.upvote(post).error(function(error){
-            $scope.error = error;
-        });
-    };
-
-    $scope.incrementUpvotes = function(comment){
-        if(auth.currentUser() === comment.author) return;
-        posts.upvoteComment(post, comment).error(function(error){
-            $scope.error = error;
-        });
-    };*/
 }]);

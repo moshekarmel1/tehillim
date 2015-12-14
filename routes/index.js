@@ -147,9 +147,14 @@ router.post('/browse/:event/assignments', auth, function(req, res, next) {
             if(err){
                 return next(err);
             }
-            res.json({
-                assignment: assignment,
-                event: event
+            req.event.populate('assignments', function(err, event) {
+                if (err) {
+                    return next(err);
+                }
+                res.json({
+                    assignment: assignment,
+                    event: req.event
+                });
             });
         });
     });
@@ -158,14 +163,18 @@ router.post('/browse/:event/assignments', auth, function(req, res, next) {
 router.delete('/browse/:event/assignments/:assignment', auth, function(req, res, next) {
     var id = req.assignment._id;
     Assignment.findByIdAndRemove(id, function(data){
-        console.log(req.event.assignments);
-        remove(req.event.assignments, id);
+        req.event.assignments.remove(id);
         req.event.percent = Math.round(req.event.assignments.length * 100 / req.event.max);
         req.event.save(function(err, event) {
             if(err){
                 return next(err);
             }
-            res.json(event);
+            req.event.populate('assignments', function(err, event) {
+                if (err) {
+                    return next(err);
+                }
+                res.json(event);
+            });
         });
     });
 });
