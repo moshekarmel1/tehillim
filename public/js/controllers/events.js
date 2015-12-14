@@ -65,7 +65,8 @@ app.controller('EventsCtrl', ['$scope', 'events', 'event', 'auth', function($sco
         }
         events.addAssignment(event._id, {
             kapitel: kapitel.name,
-            event: event._id
+            event: event._id,
+            uniqueKey: event._id.toString() + kapitel.name.toString()
         }).success(function(data) {
             $scope.event.assignments.push(data.assignment);
             $scope.event = data.event;
