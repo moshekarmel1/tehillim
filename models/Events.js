@@ -4,7 +4,7 @@ var EventSchema = new mongoose.Schema({
     title: String,
     name: String,
     description: String,
-    percent: Number,
+    percent: { type: Number, default: 0},
     max: Number,
     created: {type: Date, default: Date.now},
     createdBy: String,

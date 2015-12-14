@@ -6,7 +6,7 @@ app.controller('MainCtrl', ['$scope', 'events', 'auth', '$window', function($sco
 
     $scope.listOfOptions = ['Finish Sefer Tehillim', 'Take Challah with a bracha'];
 
-    $scope.order = '-upvotes';
+    $scope.order = 'event.created';
 
     $scope.setOrder = function (order) {
         $scope.order = order;

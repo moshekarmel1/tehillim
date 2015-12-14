@@ -3,6 +3,20 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
     $scope.user = {};
 
     $scope.register = function(){
+        if(!$scope.user.username || $scope.user.username === '') {
+            $scope.error = {
+                class: 'warning',
+                message: 'Please fill out a username...'
+            };
+            return;
+        }
+        if(!$scope.user.password || $scope.user.password === '') {
+            $scope.error = {
+                class: 'warning',
+                message: 'Please fill out a password...'
+            };
+            return;
+        }
         auth.register($scope.user).error(function(error){
             console.log(error);
             $scope.error = error;
@@ -18,6 +32,20 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
     };
 
     $scope.logIn = function(){
+        if(!$scope.user.username || $scope.user.username === '') {
+            $scope.error = {
+                class: 'warning',
+                message: 'Please fill out a username...'
+            };
+            return;
+        }
+        if(!$scope.user.password || $scope.user.password === '') {
+            $scope.error = {
+                class: 'warning',
+                message: 'Please fill out a password...'
+            };
+            return;
+        }
         //the db stores everything lowercase anyway
         $scope.user.username = $scope.user.username.toLowerCase();
         auth.logIn($scope.user).error(function(error){

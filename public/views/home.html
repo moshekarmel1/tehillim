@@ -41,7 +41,7 @@
 <hr>
 <section class="container" id="four">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="event in events | orderBy: -event.created">
+        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="event in events | orderBy: -event.created: true">
             <h2 class="text-center text-primary"><a href="/#/browse/{{event._id}}">{{event.title}}</a></h2>
             <div class="media wow fadeInRight">
                 <h3 class="text-center">{{event.name}}</h3>
