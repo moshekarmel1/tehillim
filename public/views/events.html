@@ -53,7 +53,7 @@
           </div> 
           <div class="face back"> 
             <label>({{kap.name}})</label>
-            <i class="icon-md ion-close-circled pull-right" ng-show="actualCurrentUser === kap.takenBy" ng-click="deleteAssignment(kap)"></i>
+            <i class="icon-md ion-close-circled pull-right" ng-show="currentUser() == kap.takenBy" ng-click="deleteAssignment(kap)"></i>
             <br /><label> Taken by <br />
             {{kap.takenBy}}</label>
             
