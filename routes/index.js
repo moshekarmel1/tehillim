@@ -10,17 +10,6 @@ var jwt = require('express-jwt');
 var auth = jwt({
     secret: process.env.SECRET, userProperty: 'payload'
 });
-//http://stackoverflow.com/questions/3954438/remove-item-from-array-by-value
-var remove = function(arr) {
-    var what, a = arguments, L = a.length, ax;
-    while (L > 1 && arr.length) {
-        what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
-};
 //route to register new user
 router.post('/register', function(req, res, next){
     if(!req.body.username || !req.body.password){
@@ -35,7 +24,7 @@ router.post('/register', function(req, res, next){
             if(err.code === 11000){
                 return res.status(400).json({message: 'Sorry that username is already taken'});
             }
-            return next(err); 
+            return next(err);
         }
         return res.json({
             token: user.generateJWT()
@@ -48,8 +37,8 @@ router.post('/login', function(req, res, next){
         return res.status(400).json({message: 'Please fill out all fields'});
     }
     passport.authenticate('local', function(err, user, info){
-        if(err){ 
-            return next(err); 
+        if(err){
+            return next(err);
         }
         if(user){
             return res.json({
