@@ -18,9 +18,15 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
             return;
         }
         auth.register($scope.user).error(function(error){
-            console.log(error);
-            $scope.error = error;
-            $scope.error.class = 'danger';
+            if(!error){
+                $scope.error = {
+                    class: 'danger',
+                    message: 'This site does not work well with K9, sorry...'
+                }
+            }else{
+                $scope.error = error;
+                $scope.error.class = 'danger';
+            }
         }).then(function(){
             $scope.error = {
                 class: 'success',
@@ -49,8 +55,15 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state,
         //the db stores everything lowercase anyway
         $scope.user.username = $scope.user.username.toLowerCase();
         auth.logIn($scope.user).error(function(error){
-            $scope.error = error;
-            $scope.error.class = 'danger';
+            if(!error){
+                $scope.error = {
+                    class: 'danger',
+                    message: 'This site does not work well with K9, sorry...'
+                }
+            }else {
+                $scope.error = error;
+                $scope.error.class = 'danger';
+            }
         }).then(function(){
             $scope.error = {
                 class: 'success',
