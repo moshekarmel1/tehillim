@@ -31,8 +31,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //allow same origin
 app.use(function(req, res, next) {
+    var allowedHeaders = "X-Requested-With";
+    if(req.headers && req.headers['access-control-request-headers']){
+        allowedHeaders = req.headers['access-control-request-headers'];
+    }
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", allowedHeaders);
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD");
     next();
 });
 app.use(express.static(path.join(__dirname, '../public')));
